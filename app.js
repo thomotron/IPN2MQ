@@ -1,6 +1,5 @@
 // Config variables
-var PORT = 8080;
-var BASE_REDIRECT_URI = "http://localhost:8080";
+var config = require('./config.json');
 
 // Node module imports
 var express = require('express');
@@ -32,5 +31,5 @@ app.post('/paypal/donation', ipn.validator((err, content) => {
 }, true)); // Production mode?
 
 // Start the app
-app.listen(PORT);
-console.log('Express server listening on port %d in %s mode', PORT, app.settings.env);
+app.listen(config['port']);
+console.log('Express server listening on port %d in %s mode', config['port'], app.settings.env);

@@ -1,0 +1,23 @@
+{
+  "name": "ipn2mq",
+  "version": "0.0.1",
+  "description": "Adaptor for LoveTropics' donation system to handle PayPal donations",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomotron/ipn2mq.git"
+  },
+  "author": "Thomotron",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/thomotron/ipn2mq/issues"
+  },
+  "homepage": "https://github.com/thomotron/ipn2mq#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-ipn": "^1.0.3"
+  }
+}

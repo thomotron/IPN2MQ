@@ -4,7 +4,7 @@
   "description": "Adaptor for LoveTropics' donation system to handle PayPal donations",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/thomotron/ipn2mq#readme",
   "dependencies": {
+    "amqplib": "^0.6.0",
     "express": "^4.17.1",
     "express-ipn": "^1.0.3"
   }

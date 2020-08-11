@@ -1,4 +1,7 @@
 {
     "port": 8080,
-    "mqUri": "amqp://localhost"
+    "ipnCallbackPath": "/",
+    "brokerUrl": "amqp://localhost",
+    "exchange": "amq.topic",
+    "routingKey": "request"
 }

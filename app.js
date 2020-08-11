@@ -1,9 +1,9 @@
 // Config variables
-var config = require('./config.json');
+const config = require('./config.json');
 
 // Node module imports
-var express = require('express');
-var ipn = require('express-ipn');
+const express = require('express');
+const ipn = require('express-ipn');
 
 // Node module instantiation
 var app = express();

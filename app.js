@@ -32,6 +32,15 @@ app.post(config['ipnCallbackPath'], ipn.validator((err, content) => {
     let amount = content.mc_gross;
     let email = content.payer_email
 
+    // Make sure the payment is complete before lodging the donation
+    // Otherwise just ignore it, another IPN will be sent once it clears
+    if (content.payment_status !== 'Completed') {
+        console.log('[WEB] Got an incomplete payment (%s) with transaction ID %s - not lodging donation yet', content.payment_status, content.txn_id);
+        return;
+    }
+
+    console.log('[WEB] Got a completed payment with transaction ID %s', content.txn_id);
+
     // Format a message and queue it
     let message = {
         type: "donation",

@@ -14,7 +14,7 @@ module.exports = {
             // Report connection failure and retry if necessary
             if (err) {
                 console.error("[AMQP] ", err.message);
-                return setTimeout(this, 1000);
+                return setTimeout(() => { module.exports.InitConnection(brokerUrl, onConnected) }, 1000);
             }
 
             // Handle general connection errors

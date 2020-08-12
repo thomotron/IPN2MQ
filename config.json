@@ -1,6 +1,6 @@
 {
     "port": 8080,
-    "ipnCallbackPath": "/",
+    "ipnCallbackPath": "/paypal/",
     "brokerUrl": "amqp://localhost",
     "exchange": "amq.topic",
     "routingKey": "request"

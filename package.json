@@ -4,7 +4,8 @@
   "description": "Adaptor for LoveTropics' donation system to handle PayPal donations",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "env NODE_ENV=production node app.js",
+    "dev": "env NODE_ENV=development node app.js"
   },
   "repository": {
     "type": "git",

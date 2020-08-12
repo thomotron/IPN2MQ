@@ -1,5 +1,6 @@
 // Config variables
 const config = require('./config.json');
+const isDevMode = process.env.NODE_ENV === 'development';
 
 // Node module imports
 const express = require('express');
@@ -23,6 +24,8 @@ app.post(config['ipnCallbackPath'], ipn.validator((err, content) => {
         return;
     }
 
+    // Dev-only: Dump the IPN to the terminal
+    if (isDevMode) console.log(content);
 
     // Get the details
     let donorId = content.custom ? content.custom : null;
@@ -41,7 +44,7 @@ app.post(config['ipnCallbackPath'], ipn.validator((err, content) => {
         }
     };
     mqWrapper.PublishMessage(config['exchange'], config['routingKey'], JSON.stringify(message));
-}, true)); // Production mode?
+}, !isDevMode)); // Production mode?
 
 // Connect to Rabbit
 mqWrapper.InitConnection(config['brokerUrl'], () => {

@@ -27,9 +27,6 @@ app.post(config['ipnCallbackPath'], ipn.validator((err, content) => {
     // Get the details
     let donorId = content.custom ? content.custom : null;
     let amount = content.mc_gross;
-    //let fee = content.mc_fee;
-    //let timestamp = Math.floor(Date.now()/1000); // Epoch in seconds
-    let name = content.first_name // TODO: Use something else (i.e. donorId)
     let email = content.payer_email
 
     // Format a message and queue it
@@ -37,7 +34,7 @@ app.post(config['ipnCallbackPath'], ipn.validator((err, content) => {
         type: "donation",
         crud: "create",
         payload: {
-            name: name,
+            name: donorId,
             email: email,
             amount: amount,
             comments: "" // Leave blank

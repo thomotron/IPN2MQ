@@ -7,6 +7,7 @@ const amqp = require('amqplib/callback_api');
 
 let amqpConn = null;
 let pubChannel = null;
+let pendingMessages = [];
 module.exports = {
     InitConnection: (brokerUrl, onConnected) => {
         // Connect to the broker
@@ -61,14 +62,21 @@ module.exports = {
             });
 
             // Report channel opened and store it for later
-            console.log("[AMQP] Publisher started");
+            console.log("[AMQP] Channel opened");
             pubChannel = channel;
+
+            // Clear out any backlogged messages
+            while (pendingMessages.length > 0) {
+                let message = pendingMessages.pop();
+                module.exports.PublishMessage(message['exchange'], message['key'], message['content'], message['options']);
+            }
         });
     },
     PublishMessage: (exchange, routingKey, content, options = {}) => {
         // Make sure the channel is available
         if (!pubChannel) {
-            console.error("[AMQP] Cannot publish message, channel is not open. Open it with OpenChannel.");
+            pendingMessages.push({exchange: exchange, key: routingKey, content: content, options: options});
+            console.error("[AMQP] Cannot publish message, channel is not open. Added to pending queue for when it becomes available.");
             return;
         }
 
@@ -84,7 +92,15 @@ module.exports = {
                 console.log("[AMQP] Published message");
             });
         } catch (e) {
-            console.error("[AMQP] Publish error", e.message);
+            // Handle sending to a closed channel by stashing the message
+            // for later
+            if (e.message === "Channel closed") {
+                pendingMessages.push({exchange: exchange, key: routingKey, content: content, options: options});
+                console.error("[AMQP] Cannot publish message, channel is not open. Added to pending queue for when it becomes available.");
+                return;
+            } else {
+                console.error("[AMQP] Publish error", e.message);
+            }
         }
     }
 };

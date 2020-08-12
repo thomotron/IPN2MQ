@@ -6,12 +6,13 @@ const express = require('express');
 const ipn = require('express-ipn');
 const amqp = require('amqplib/callback_api');
 const mqWrapper = require('./amqpWrapper.js');
+const bodyParser = require('body-parser');
 
 // Node module instantiation
 var app = express();
 
 // Express middleware config
-// ...none
+app.use(bodyParser.urlencoded({extended: false}));
 
 // Express routes
 // Process PayPal Instant Payment Notifications from donations

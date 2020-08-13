@@ -2,7 +2,7 @@
 // by Rafael Guzman.
 // Obtained from https://gist.github.com/rguzmano/1dcfda90b5872bd5ced66d2d9b865719
 // and https://gist.github.com/rguzmano/7b6fbc04dc9b5da6d850d09c2fb353a8
-// on Aug 17, 2020 at 08:17 UTC
+// on Aug 11, 2020 at 08:17 UTC
 const amqp = require('amqplib/callback_api');
 
 let amqpConn = null;

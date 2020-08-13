@@ -35,8 +35,8 @@ app.post(config['ipnCallbackPath'], ipn.validator((err, content) => {
     // Make sure the payment is addressed to our PayPal email (if enabled)
     // before moving on, ignoring it otherwise.
     // This should prevent abuse of the callback URL with another payee.
-    if (config['paypalEmail'] && content.receiver_email !== config['paypalEmail']) {
-        console.log('[WEB] Got a payment addressed to %s instead of %s - ignoring. This could be malicious behaviour.', content.receiver_email, config['paypalEmail']);
+    if (config['recipientEmail'] && content.receiver_email !== config['recipientEmail']) {
+        console.log('[WEB] Got a payment addressed to %s instead of %s - ignoring. This could be malicious behaviour.', content.receiver_email, config['recipientEmail']);
         return;
     }
 
@@ -71,4 +71,4 @@ mqWrapper.InitConnection(config['brokerUrl'], () => {
 // Start the app
 app.listen(config['port'], config['host']);
 console.log('[WEB] Express server listening on port %d in %s mode', config['port'], app.settings.env);
-if (config['paypalEmail']) console.log('[WEB] Only accepting payments made to %s', config['paypalEmail']);
+if (config['recipientEmail']) console.log('[WEB] Only accepting payments made to %s', config['recipientEmail']);

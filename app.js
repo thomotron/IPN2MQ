@@ -32,6 +32,14 @@ app.post(config['ipnCallbackPath'], ipn.validator((err, content) => {
     let amount = content.mc_gross;
     let email = content.payer_email
 
+    // Make sure the payment is addressed to our PayPal email (if enabled)
+    // before moving on, ignoring it otherwise.
+    // This should prevent abuse of the callback URL with another payee.
+    if (config['paypalEmail'] && content.receiver_email !== config['paypalEmail']) {
+        console.log('[WEB] Got a payment addressed to %s instead of %s - ignoring. This could be malicious behaviour.', content.receiver_email, config['paypalEmail']);
+        return;
+    }
+
     // Make sure the payment is complete before lodging the donation
     // Otherwise just ignore it, another IPN will be sent once it clears
     if (content.payment_status !== 'Completed') {
@@ -63,3 +71,4 @@ mqWrapper.InitConnection(config['brokerUrl'], () => {
 // Start the app
 app.listen(config['port'], config['host']);
 console.log('[WEB] Express server listening on port %d in %s mode', config['port'], app.settings.env);
+if (config['paypalEmail']) console.log('[WEB] Only accepting payments made to %s', config['paypalEmail']);

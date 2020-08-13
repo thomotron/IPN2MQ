@@ -13,11 +13,11 @@ A sample configuration file (`config.json`) is included in the repository. All f
 | ----------------- | -------------------- | ------------------------------------------- |
 | `host`            | `"0.0.0.0"`          | Host address to bind the IPN listener to    |
 | `post`            | `8080`               | Port to bind the IPN listener to            |
-| `ipnCallbackPath` | `/paypal/`         | Path that the IPN listener will listen at   |
+| `ipnCallbackPath` | `"/paypal/"`         | Path that the IPN listener will listen at   |
 | `paypalEmail`     | `""`                 | Recipient email to filter IPNs by. Any IPN for a payment sent to a different email will be ignored. Leave the string empty to disable this feature. |
-| `brokerUrl`       | `amqp://localhost` | Address of the RabbitMQ broker              |
-| `exchange`        | `amq.topic`        | Exchange to publish reformatted IPN data to |
-| `routingKey`      | `request`          | Routing key for the exchange                |
+| `brokerUrl`       | `"amqp://localhost"` | Address of the RabbitMQ broker              |
+| `exchange`        | `"amq.topic"`        | Exchange to publish reformatted IPN data to |
+| `routingKey`      | `"request"`          | Routing key for the exchange                |
 
 ### PayPal
 PayPal will need to know where to send IPNs before it can actually send them. Configure the `ipnCallbackPath` as desired and refer to the [PayPal docs](https://developer.paypal.com/docs/api-basics/notifications/ipn/IPNSetup/) for registering the URL for IPNs.

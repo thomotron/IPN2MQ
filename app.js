@@ -61,5 +61,5 @@ mqWrapper.InitConnection(config['brokerUrl'], () => {
 });
 
 // Start the app
-app.listen(config['port']);
+app.listen(config['port'], config['host']);
 console.log('[WEB] Express server listening on port %d in %s mode', config['port'], app.settings.env);
